@@ -14,7 +14,6 @@ metadata:
   labels:
     app: frontend
 spec:
-  serviceAccountName: frontend
   replicas: 1
   selector:
     matchLabels:
@@ -24,6 +23,7 @@ spec:
       labels:
         app: frontend
     spec:
+      serviceAccountName: frontend
       containers:
       - name: load-generator-frontend
         image: acrxlobtf.azurecr.io/frontend
@@ -62,7 +62,6 @@ metadata:
   labels:
     app: backend
 spec:
-  serviceAccountName: backend
   replicas: 1
   selector:
     matchLabels:
@@ -72,6 +71,7 @@ spec:
       labels:
         app: backend
     spec:
+      serviceAccountName: backend
       containers:
       - name: load-generator-backend
         image: acrxlobtf.azurecr.io/backend
