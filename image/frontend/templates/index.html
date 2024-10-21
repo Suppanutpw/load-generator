@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Frontend</h1>
+        <form action="/trigger" method="post" class="mt-3">
+            <div class="form-group">
+                <label for="destination_ip">Destination IP</label>
+                <input type="text" class="form-control" id="destination_ip" name="destination_ip" value="{{ previous_destination_ip }}" required>
+            </div>
+            <div class="form-group">
+                <label for="data_size">Data Size (MB)</label>
+                {% if previous_data_size != "" %}
+                <input type="number" class="form-control" id="data_size" name="data_size" value="{{ previous_data_size }}" required>
+                {% else %}
+                <input type="number" class="form-control" id="data_size" name="data_size" value="10" required>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="status_code">HTTP Status Code</label>
+                {% if previous_status_code != "" %}
+                <input type="number" class="form-control" id="status_code" name="status_code" value="{{ previous_status_code }}" required>
+                {% else %}
+                <input type="number" class="form-control" id="status_code" name="status_code" value="200" required>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Trigger Process</button>
+        </form>
+        {% if message %}
+        <div class="alert alert-success mt-3" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

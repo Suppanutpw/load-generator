@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend
+  namespace: load-generator
+  labels:
+    account: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: load-generator
+  labels:
+    app: frontend
+spec:
+  serviceAccountName: frontend
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: load-generator-frontend
+        image: acrxlobtf.azurecr.io/frontend
+        ports:
+        - containerPort: 5001
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: load-generator
+  labels:
+    app: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend
+  namespace: load-generator
+  labels:
+    account: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: load-generator
+  labels:
+    app: backend
+spec:
+  serviceAccountName: backend
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: load-generator-backend
+        image: acrxlobtf.azurecr.io/backend
+        ports:
+        - containerPort: 5002
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: load-generator
+  labels:
+    app: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002
